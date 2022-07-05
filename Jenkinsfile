@@ -11,7 +11,7 @@ pipeline{
         stage('gitclone') {
 
             steps {
-                git branch: 'main', url 'https://github.com/suryakumari14/dockerproject-1.git'
+                git 'https://github.com/suryakumari14/dockerproject-1.git'
             }
         }
 
