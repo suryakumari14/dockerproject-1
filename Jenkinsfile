@@ -5,6 +5,7 @@ pipeline{
     environment {
         dockerImage=''
         registry='suryakumarij/demo'
+        registryCredential='docker_hub'
     }
 
     stages {
@@ -20,6 +21,15 @@ pipeline{
             steps {
                 script{
                     dockerImage = docker.build registry
+                }
+            }
+            stage('Push') {
+                steps {
+                    script {
+                        docker.withRegistry('',registryCredential ){
+                        dockerImage.push()
+                        }
+                    }
                 }
             }
         }
