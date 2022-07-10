@@ -3,7 +3,8 @@ pipeline{
     agent any
 
     environment {
-        DOCKERHUB_CREDENTIALS=credentials('docker_hub')
+        dockerImage=''
+        registry='suryakumarij/demo'
     }
 
     stages {
@@ -18,7 +19,9 @@ pipeline{
         stage('Build') {
 
             steps {
-                sh 'docker build -t suryakumarij/demo:2.0 .'
+                script{
+                    dockerImage = docker.build registry
+                }
             }
         }
 
