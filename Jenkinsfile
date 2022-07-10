@@ -17,12 +17,12 @@ pipeline{
         }
 
         stage('Build') {
-
             steps {
                 script{
                     dockerImage = docker.build registry
                 }
             }
+        }
             stage('Push') {
                 steps {
                     script {
@@ -32,7 +32,6 @@ pipeline{
                     }
                 }
             }
-        }
     }
 }  
     
