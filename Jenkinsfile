@@ -5,10 +5,10 @@ pipeline{
     environment {
         dockerImage=''
         registry='suryakumarij/demo'
+        registryCredential='docker_hub'
     }
 
     stages {
-        
         stage('gitclone') {
 
             steps {
@@ -24,26 +24,15 @@ pipeline{
                 }
             }
         }
-
-        stage('Login') {
-
-            steps {
-                sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
-            }
-        }
-
-        stage('Push') {
+        stage('Uploading Image') {
 
             steps {
-                sh 'docker push suryakumarij/demo:2.0'
+                script {
+                    docker.withRegistry('',registryCredential ){
+                        dockerImage.push()
+                    }
+                }
             }
         }
     }
-
-    post {
-        always {
-            sh 'docker logout'
-        }
-    }
-
 }
